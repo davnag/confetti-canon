@@ -1,0 +1,16 @@
+PODS:
+  - ConfettiCanon (0.1.0)
+
+DEPENDENCIES:
+  - ConfettiCanon (from `../`)
+
+EXTERNAL SOURCES:
+  ConfettiCanon:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  ConfettiCanon: b87e953a46b924373f50ac5ef9c6570e006c4965
+
+PODFILE CHECKSUM: 30153a666433d04cb38b916bd726283ecd6362b2
+
+COCOAPODS: 1.8.4

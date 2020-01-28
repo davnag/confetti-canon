@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '12.0'
+
+target 'ConfettiCanon_Example' do
+  pod 'ConfettiCanon', :path => '../'
+
+  target 'ConfettiCanon_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end

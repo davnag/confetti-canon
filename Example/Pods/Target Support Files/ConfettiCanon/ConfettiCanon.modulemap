@@ -1,0 +1,6 @@
+framework module ConfettiCanon {
+  umbrella header "ConfettiCanon-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -2,16 +2,20 @@
 import UIKit
 import QuartzCore
 
+@objc
 public class PartyCanon: UIView {
 
+    @objc
     public var location: CGPoint = .zero {
         didSet {
             emitter?.emitterPosition = location
         }
     }
 
+    @objc
     private var emissionLongitude: CGFloat = -CGFloat.pi / 2  //Up
     
+    @objc
     public var target: CGPoint = .zero {
         didSet {
 
@@ -20,24 +24,31 @@ public class PartyCanon: UIView {
         }
     }
 
+    @objc
     public var velocity: CGFloat = 0 {
         didSet {
             self.emitter?.setValue(NSNumber(value: Double(self.velocity)), forKeyPath: "emitterCells.confetti.velocity")
         }
     }
 
+    @objc
     public var amount: Double = 0
+    
+    @objc
     public var colorize: Bool = true
 
+    @objc
     var particleImage: UIImage?
 
     private var emitter: CAEmitterLayer?
 
+    @objc
     public override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
     }
 
+    @objc
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupView()
@@ -55,6 +66,7 @@ extension PartyCanon {
 
 extension PartyCanon {
 
+    @objc
     public func reset() {
 
         location = CGPoint(x: frame.midX, y: frame.maxY)
@@ -64,7 +76,8 @@ extension PartyCanon {
         amount = 500
     }
 
-    public func shoot() {
+    @objc
+    public func fire() {
 
         let emitter = CAEmitterLayer()
         emitter.emitterPosition = location
@@ -93,7 +106,8 @@ extension PartyCanon {
         }
     }
     
-    public func randomParty() {
+    @objc
+    public func fireAtRandomLocation() {
 
         velocity = CGFloat(Int.random(in: 120...200))
         amount = Double(Int.random(in: 400...600))
@@ -103,10 +117,11 @@ extension PartyCanon {
         target = CGPoint(x: location.x - CGFloat(Int.random(in: -50...50)),
                                     y: location.y - CGFloat(Int.random(in: 50...300)))
 
-        shoot()
+        fire()
     }
     
-    public func fireRandomCanon(at location: CGPoint) {
+    @objc
+    public func fire(at location: CGPoint) {
 
         velocity = CGFloat(Int.random(in: 200...250))
         amount = Double(Int.random(in: 300...600))
@@ -115,7 +130,33 @@ extension PartyCanon {
         target = CGPoint(x: location.x - CGFloat(Int.random(in: -50...50)),
                                     y: location.y - CGFloat(Int.random(in: 50...300)))
 
-        shoot()
+        fire()
+    }
+    
+    @objc
+    public func fire(from point: CGPoint, times: Int, intervall: TimeInterval) {
+        var loop: ((Int) -> Void)!
+        loop = { [weak self] count in
+            guard count > 0 else { return }
+            DispatchQueue.main.asyncAfter(deadline: .now() + intervall) {
+                self?.fire(at: point)
+                loop(count - 1)
+            }
+        }
+        loop(times)
+    }
+    
+    @objc
+    public func vibrate(times: Int, intervall: TimeInterval) {
+        var loop: ((Int) -> Void)!
+        loop = { count in
+            guard count > 0 else { return }
+            DispatchQueue.main.asyncAfter(deadline: .now() + intervall) {
+                UISelectionFeedbackGenerator().selectionChanged()
+                loop(count - 1)
+            }
+        }
+        loop(times)
     }
 }
 

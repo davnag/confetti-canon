@@ -8,6 +8,7 @@ extension UIViewController {
         return "ConfettiRain"
     }
 
+    @objc
     public func startConfettiRain() {
 
         let particleEmitter = CAEmitterLayer()
@@ -34,6 +35,7 @@ extension UIViewController {
         particleEmitter.add(fadeAnimation, forKey:"animateOpacity")
     }
     
+    @objc
     public func stopConfettiRain() {
         
         guard let particleEmitter = view.layer.sublayers?.first(where: { $0.name == UIViewController.LayerName }) else {
